@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-item-tree',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./item-tree.component.scss']
 })
 export class ItemTreeComponent {
-
+  @Input() children: [] | undefined;
 }

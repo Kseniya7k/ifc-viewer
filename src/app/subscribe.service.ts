@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class SubscribeServiceService {
+export class SubscribeService {
+  hide$ = new BehaviorSubject<any>(null);
+
+  removeHide$ = new BehaviorSubject<any>(null);
 
   constructor() { }
 }

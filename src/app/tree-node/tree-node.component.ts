@@ -1,12 +1,25 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Node} from "../board-for-ifc/board-for-ifc.component";
+import {BehaviorSubject} from "rxjs";
+import {SubscribeService} from "../subscribe.service";
 
 @Component({
-  selector: 'app-list-tree',
-  templateUrl: './list-tree.component.html',
-  styleUrls: ['./list-tree.component.scss']
+  selector: 'tree-node',
+  templateUrl: './tree-node.component.html',
+  styleUrls: ['./tree-node.component.scss']
 })
-export class ListTreeComponent {
+export class TreeNodeComponent {
 
-  @Input() tree: any;
+  @Input() tree: Node | null;
 
+  constructor(private subscribeService: SubscribeService,) {
+  }
+
+  hideElement() {
+    this.subscribeService.hide$.next(this.tree);
+  }
+
+  removeHideElement() {
+    this.subscribeService.removeHide$.next(this.tree);
+  }
 }

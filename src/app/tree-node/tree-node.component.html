@@ -1,3 +1,8 @@
-<p>{{tree?.expressID}}</p>
-<p>{{tree?.type}}</p>
-<app-item-tree [children]="tree.children"></app-item-tree>
+<div class="container">
+  <div *ngIf="tree !== null" >
+    ID: {{tree?.expressID}}; Type: {{tree?.type}}
+    <button (click)="hideElement()">HIDE</button>
+    <button (click)="removeHideElement()">REVERT</button>
+  </div>
+  <tree-node *ngFor="let item of tree?.children" [tree]="item"></tree-node>
+</div>

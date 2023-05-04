@@ -1,1 +1,62 @@
-<p>board-for-ifc works!</p>
+<!--<div class="id-pazl"><span>ID: {{id}}</span></div>-->
+<div class="panel-setting">
+  <tree-node class="tree-obj" [tree]="tree"></tree-node>
+  <div class="obj-scane">
+<!--    <span> {{objectScane}} </span>-->
+    <div class="checkboxes">
+      <div class="input-checkbox">
+        <input checked id="IFCSITE" type="checkbox" (change)="onChangeCheckbox($event, 'IFCSITE')" />
+        first
+      </div>
+      <div class="input-checkbox">
+        <input checked id="IFCBUILDING" type="checkbox" (change)="onChangeCheckbox($event, 'IFCBUILDING')"/>
+        second
+      </div>
+      <div class="input-checkbox">
+        <input checked id="IFCBUILDINGSTOREY" type="checkbox" (change)="onChangeCheckbox($event, 'IFCBUILDINGSTOREY')"/>
+        third
+      </div>
+      <div class="input-checkbox">
+        <input checked id="IFCBUILDINGELEMENTPROXY" type="checkbox" (change)="onChangeCheckbox($event, 'IFCBUILDINGELEMENTPROXY')"/>
+        fourth
+      </div>
+      <div class="input-checkbox">
+        <input checked id="IFCELEMENTASSEMBLY" type="checkbox" (change)="onChangeCheckbox($event, 'IFCELEMENTASSEMBLY')"/>
+        fifth
+      </div>
+      <div class="save-block">
+        <a href="{{fileUrl}}" download="modified.ifc">СКАЧАТЬ файл</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div>
+  <input type="file" name="load" id="file-input" #openIfcFileInput (change)="addFile($event)" />
+  <button class="save-model-btn" (click)="saveModel()">Сохранить модель</button>
+  <canvas
+    id="three-canvas"
+    #canvasIFC
+    (click)="pick($event)"
+    (dblclick)="showId($event)"
+    (mousemove)="highlight($event)"
+  ></canvas>
+</div>
+
+<div class="button-container">
+  <button (click)="increaseZoom('plus')">+</button>
+  <button (click)="increaseZoom('minus')">-</button>
+</div>
+
+<!--<div class="loading-block" *ngIf="isShowLoading">-->
+<!--  <div> Идёт загрузка. {{loadingProcess}} / 100 %</div>-->
+<!--  <ng-container-->
+<!--    [ngTemplateOutlet]="process"-->
+<!--    [ngTemplateOutletContext]="{ loaded: loadingProcess }"-->
+<!--  ></ng-container>-->
+<!--</div>-->
+
+<!--<ng-template #process let-loaded="loaded">-->
+<!--  <p> Идёт загрузка. {{loaded}} / 100 %</p>-->
+<!--</ng-template>-->
+
