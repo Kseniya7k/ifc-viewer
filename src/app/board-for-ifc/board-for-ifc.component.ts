@@ -128,6 +128,8 @@ export class BoardForIfcComponent implements OnInit, OnDestroy, AfterViewInit {
   ifcAPI = new IfcAPI();
   private ifcURL: string;
 
+  uint8Array: Uint8Array;
+
   constructor(private subscribeService: SubscribeService) {
   }
 
@@ -225,33 +227,54 @@ export class BoardForIfcComponent implements OnInit, OnDestroy, AfterViewInit {
        // this.scene.add(result);
        this.setupAllCategories();
      });
-     const byteFile = await this.getAsByteArray(file);
 
+     // const byteFile = await this.readFile(file);
 
-     console.log(byteFile);
-     this.modelIDIfcFile = this.ifcAPI.OpenModel(byteFile);
-     let isModelOpened = this.ifcAPI.IsModelOpen(this.modelIDIfcFile);
-     console.log({isModelOpened});
-     console.log(this.modelIDIfcFile);
+     this.getUnit8Array(file, byteFile => {
+       console.log(byteFile);
+       this.modelIDIfcFile = this.ifcAPI.OpenModel(byteFile);
+       let isModelOpened = this.ifcAPI.IsModelOpen(this.modelIDIfcFile);
+       console.log({isModelOpened});
+       console.log(this.modelIDIfcFile);
+     });
    }
 
-  async getAsByteArray(file: any) {
-    return new Uint8Array(await this.readFile(file));
-  }
+   getUnit8Array(file: any, openModal: (byteFile: Uint8Array) => void) {
+     const reader = new FileReader();
 
-  readFile(file: any): Promise<any> {
-    return new Promise((resolve, reject) => {
-      // Create file reader
-      let reader = new FileReader()
+     reader.addEventListener("loadend", ev => {
+       const arrayBuffer = reader.result as ArrayBuffer;
+       debugger;
 
-      // Register event listeners
-      reader.addEventListener("loadend", e => resolve(e.target?.result))
-      reader.addEventListener("error", reject)
+       if (arrayBuffer) {
+         const uint8Array = new Uint8Array(arrayBuffer);
+         console.log(uint8Array);
 
-      // Read file
-      reader.readAsArrayBuffer(file)
-    })
-  }
+         openModal(uint8Array);
+         console.log(uint8Array);
+       }
+     });
+
+     reader.readAsArrayBuffer(file);
+   }
+
+  // async getAsByteArray(file: any) {
+  //   return new Uint8Array(await this.readFile(file));
+  // }
+  //
+  // readFile(file: any): Promise<any> {
+  //   return new Promise((resolve, reject) => {
+  //     // Create file reader
+  //     let reader = new FileReader()
+  //
+  //     // Register event listeners
+  //     reader.addEventListener("loadend", e => resolve(e.target?.result))
+  //     reader.addEventListener("error", reject)
+  //
+  //     // Read file
+  //     reader.readAsArrayBuffer(file)
+  //   })
+  // }
 
     setupAnimation = () => {
       // this.stats.begin();
